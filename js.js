@@ -1,39 +1,48 @@
 // Make gameboard object
 // And make gameboard array inside of object
-
-const gameboard = {
-    Gameboard: [1, 2, 3]
-};
-
+// Flow game time object
+const gameBoard = (() => {
+    const board = [];
+    const flow = 0;
+    const checkBoard = () => {};
+    const addX = () => {
+        checkBoard();
+        board.push("X");
+    }
+    const addO = () => {
+        checkBoard();
+        board.push("O");
+    }
+    const printBoard = () => {
+        return board;
+    }
+    return {addX, addO, printBoard}
+})();
 
 // Object for players
 
-const Players = (score = 0) => {
-    let asd = 5;
-    const editscore = (arg = "+") => {
-        score = 2;
-        asd++;
-        console.log("called");
-        // if (arg == "+") {
-        //     // score++;
-        //     score = 2;
-        //     console.log("score up", score);
-        // } else {
-        //     score--;
-        //     console.log("score down called");
-        // }
+const player = () => {
+    let score = 0;
+    const addScore = () => {
+        score += 1;
     }
-    return { score, editscore, asd };
-}
+    const removeScore = () => {
+        score -= 1;
+    }
+    const printScore = () => {
+        return score;
+    }
+    return {
+        addScore,
+        removeScore,
+        printScore
+    }
+};
 
-const player1 = Players(0);
-const player2 = Players(1);
+const player1 = player();
+const player2 = player();
 
-player2.editscore();
+player1.addScore();
+player2.removeScore();
 
-console.log("player 1: ", player1.score);
-console.log("player 2: ", player2.score);
-console.log("player 2: ", player2.asd);
-
-// Object for gameflow
-
+console.log("player 2: ", player2.printScore());
