@@ -40,10 +40,9 @@ const gameBoard = (() => {
                     flow++;
                 }
             }
-            Logic();
-            printBoard();
         }
-
+        Logic();
+        printBoard();
     }
     const printBoard = () => {
         body.innerHTML = "";
@@ -98,28 +97,28 @@ const Logic = () => {
             gameBoard.resetFlow();
             if (board[i] === "X") {
                 player1.addScore();
-                console.log("Player 1 Wins on first loop");
+                console.log("Player 1 Wins on first loop", player1.printScore());
             } else {
                 player2.addScore();
-                console.log("Player 2 Wins on first loop");
+                console.log("Player 2 Wins on first loop", player2.printScore());
             }
         } else if (board[i] !==  "" && board[i] === board[i+3] && board[i+3] === board[i+6]) {
             gameBoard.resetFlow();
             if (board[i] === "X") {
                 player1.addScore();
-                console.log("Player 1 Wins on second loop");
+                console.log("Player 1 Wins on second loop", player1.printScore());
             } else {
                 player2.addScore();
-                console.log("Player 2 Wins on second loop");
+                console.log("Player 2 Wins on second loop", player2.printScore());
             }
         } else if (board[i] !==  "" && board[i] === board[i+4] && board[i+4] === board[i+8]) {
-            console.log("Wins on third loop");
+            gameBoard.resetFlow();
             if (board[i] === "X") {
                 player1.addScore();
-                console.log("Player 1 Wins on third loop");
+                console.log("Player 1 Wins on third loop", player1.printScore());
             } else {
                 player2.addScore();
-                console.log("Player 2 Wins on third loop");
+                console.log("Player 2 Wins on third loop", player2.printScore());
             }
         }
     }
@@ -129,10 +128,6 @@ const Logic = () => {
 const player1 = Player();
 const player2 = Player();
 
-player1.addScore();
-
-console.log("player 2: ", player2.printScore());
-console.log("board: ", gameBoard.printBoard());
 gameBoard.printBoard();
 
 
