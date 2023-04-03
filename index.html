@@ -11,10 +11,10 @@
 <body>
     <form>
         <label for="player1">Player 1 Name:</label>
-        <input type="text" id="player1" name="player1"><br>
+        <input type="text" id="player1" name="player1" placeholder="Please enter player 1 name"><br>
         <label for="player2">Player 2 Name:</label>
-        <input type="text" id="player2" name="player2"><br>
-        <input type="submit" value="Save">
+        <input type="text" id="player2" name="player2" placeholder="Please enter player 2 name"><br>
+        <input type="submit" onclick="submitValue()" value="Save">
         <button type="button">Reset</button>
     </form>
     <table>
@@ -23,12 +23,12 @@
             <th>Score</th>
         </tr>
         <tr>
-            <td>Player 1</td>
-            <td>P1 Score</td>
+            <td class="p1-name">Player 1</td>
+            <td class="p1-score">P1 Score</td>
         </tr>
         <tr>
-            <td>Player 2</td>
-            <td>P2 Score</td>
+            <td class="p2-name">Player 2</td>
+            <td class="p2-score">P2 Score</td>
         </tr>
     </table>
     <div class="body">BODY</div>

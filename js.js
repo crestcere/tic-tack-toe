@@ -1,3 +1,25 @@
+// Score
+//
+let p1name;
+let p2name;
+const submitValue = () => {
+    event.preventDefault();
+    const player1 = document.querySelector("#player1");
+    const player2 = document.querySelector("#player2");
+
+    if (player1.value === "") {
+        player1.value = "Player 1";
+    }
+    if (player2.value === "") {
+        player2.value = "Player 2"
+    }
+    p1name = player1.value;
+    p2name = player2.value;
+    return {
+        p1name,
+        p2name
+    }
+}
 // Make gameboard object
 // And make gameboard array inside of object
 // Flow game time object
@@ -68,7 +90,7 @@ const gameBoard = (() => {
 })();
 // Object for players
 
-const Player = () => {
+const Player = (name = "player") => {
     let score = 0;
     const addScore = () => {
         score += 1;
@@ -82,7 +104,8 @@ const Player = () => {
     return {
         addScore,
         printScore,
-        resetScore
+        resetScore,
+        name
     }
 };
 
@@ -125,9 +148,24 @@ const Logic = () => {
     return {};
 }
 
-const player1 = Player();
-const player2 = Player();
+//TODO
+// const score = (() => {
+//     document.querySelector(".p1-name").value = player1.name;
+//     document.querySelector(".p2-name").value = player2.name;
+//     document.querySelector(".p1-score").value = player1.printScore();
+//     document.querySelector(".p2-score").value = player2.printScore();
+//     return {
+//
+//     }
+// })()
+// {
+//     document.querySelector(".p1-name").value = player1.printScore();
+//
+// }
 
+const player1 = Player(p1name);
+const player2 = Player(p2name);
+console.log({player1});
 gameBoard.printBoard();
 
 
