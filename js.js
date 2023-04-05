@@ -1,25 +1,54 @@
 // Score
 //
-let p1name;
-let p2name;
-const submitValue = () => {
-    event.preventDefault();
-    const player1 = document.querySelector("#player1");
-    const player2 = document.querySelector("#player2");
+// window.onbeforeunload = function () {return false;} // Disable auto refresh
 
-    if (player1.value === "") {
-        player1.value = "Player 1";
+const saveInput = (() => {
+    let _p1name = "Player 1";
+    let _p2name = "Player 2";
+    const submitValue = () => {
+        event.preventDefault();
+        const player1 = document.querySelector("#player1");
+        const player2 = document.querySelector("#player2");
+        if (player1.value) {
+            _p1name = player1.value;
+        }
+        if (player2.value) {
+            _p2name = player2.value;
+        }
     }
-    if (player2.value === "") {
-        player2.value = "Player 2"
-    }
-    p1name = player1.value;
-    p2name = player2.value;
+    document.querySelector(".savebutton").addEventListener("click", () => {
+        submitValue();
+        scoreBoard.setNames();
+        scoreBoard.setScores();
+    })
     return {
-        p1name,
-        p2name
+        submitValue,
+        get p1name() {
+            return _p1name;
+        },
+        get p2name() {
+            return _p2name;
+        }
     }
-}
+})()
+
+const scoreBoard = (() => {
+    const setNames = () => {
+        document.querySelector(".p1-name").innerHTML = saveInput.p1name;
+        document.querySelector(".p2-name").innerHTML = saveInput.p2name;
+        playerOne.name = saveInput.p1name;
+        playerTwo.name = saveInput.p2name;
+    }
+    const setScores = () => {
+        document.querySelector(".p1-score").innerHTML = playerOne.printScore();
+        document.querySelector(".p2-score").innerHTML = playerTwo.printScore();
+    }
+
+    return {
+        setNames,
+        setScores
+    }
+})()
 // Make gameboard object
 // And make gameboard array inside of object
 // Flow game time object
@@ -84,13 +113,25 @@ const gameBoard = (() => {
         let a;
         a = store.join(" ");
         body.innerHTML = a;
-        return {board};
     }
+    const resetBoard = () => {
+        console.log("reset board clicked");
+        flow = 0;
+        for (let i = 0; i < board.length; i++) {
+            board[i] = "";
+        }
+        printBoard()
+    }
+    document.querySelector(".reset-board").addEventListener("click", () => {
+        resetBoard();
+    })
+    printBoard();
     return {fill, printBoard, getBoard, resetFlow}
 })();
 // Object for players
 
-const Player = (name = "player") => {
+const createPlayer = (name) => {
+    let _name = name;
     let score = 0;
     const addScore = () => {
         score += 1;
@@ -102,70 +143,70 @@ const Player = (name = "player") => {
         score = 0;
     }
     return {
+        get name() {
+            return _name;
+        },
+        set name(names) {
+            _name = names;
+        },
+        // printName,
         addScore,
         printScore,
-        resetScore,
-        name
+        resetScore
     }
 };
 
+const playerOne = createPlayer("Player 1");
+const playerTwo = createPlayer("Player 2");
+
 const Logic = () => {
     // 1 3 4
-    console.log("Logic called");
-    // const board = gameBoard.getBoard;
     const board = gameBoard.getBoard();
-    // console.log({board});
     for (let i = 0; i < board.length; i++) {
+        // Check "X" "X" "X"
         if (board[i] !==  "" && board[i] === board[i+1] && board[i+1] === board[i+2]) {
             gameBoard.resetFlow();
             if (board[i] === "X") {
-                player1.addScore();
-                console.log("Player 1 Wins on first loop", player1.printScore());
+                playerOne.addScore();
+                scoreBoard.setScores();
+                console.log("Player 1 Wins on first loop", playerOne.printScore());
             } else {
-                player2.addScore();
-                console.log("Player 2 Wins on first loop", player2.printScore());
+                playerTwo.addScore();
+                scoreBoard.setScores();
+                console.log("Player 2 Wins on first loop", playerTwo.printScore());
             }
         } else if (board[i] !==  "" && board[i] === board[i+3] && board[i+3] === board[i+6]) {
+            // "X"
+            // "X"
+            // "X"
             gameBoard.resetFlow();
             if (board[i] === "X") {
-                player1.addScore();
-                console.log("Player 1 Wins on second loop", player1.printScore());
+                playerOne.addScore();
+                scoreBoard.setScores();
+                console.log("Player 1 Wins on second loop", playerOne.printScore());
             } else {
-                player2.addScore();
-                console.log("Player 2 Wins on second loop", player2.printScore());
+                playerTwo.addScore();
+                scoreBoard.setScores();
+                console.log("Player 2 Wins on second loop", playerTwo.printScore());
             }
         } else if (board[i] !==  "" && board[i] === board[i+4] && board[i+4] === board[i+8]) {
+            // "X"
+            //     "X"
+            //         "X"
             gameBoard.resetFlow();
             if (board[i] === "X") {
-                player1.addScore();
-                console.log("Player 1 Wins on third loop", player1.printScore());
+                playerOne.addScore();
+                scoreBoard.setScores();
+                console.log("Player 1 Wins on third loop", playerOne.printScore());
             } else {
-                player2.addScore();
-                console.log("Player 2 Wins on third loop", player2.printScore());
+                playerTwo.addScore();
+                scoreBoard.setScores();
+                console.log("Player 2 Wins on third loop", playerTwo.printScore());
             }
         }
     }
     return {};
 }
 
-//TODO
-// const score = (() => {
-//     document.querySelector(".p1-name").value = player1.name;
-//     document.querySelector(".p2-name").value = player2.name;
-//     document.querySelector(".p1-score").value = player1.printScore();
-//     document.querySelector(".p2-score").value = player2.printScore();
-//     return {
-//
-//     }
-// })()
-// {
-//     document.querySelector(".p1-name").value = player1.printScore();
-//
-// }
-
-const player1 = Player(p1name);
-const player2 = Player(p2name);
-console.log({player1});
-gameBoard.printBoard();
-
+// TODO Reset Score
 
