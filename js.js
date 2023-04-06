@@ -122,11 +122,9 @@ const gameBoard = (() => {
         }
         printBoard()
     }
-    document.querySelector(".reset-board").addEventListener("click", () => {
-        resetBoard();
-    })
+
     printBoard();
-    return {fill, printBoard, getBoard, resetFlow}
+    return {fill, printBoard, getBoard, resetFlow, resetBoard}
 })();
 // Object for players
 
@@ -149,7 +147,6 @@ const createPlayer = (name) => {
         set name(names) {
             _name = names;
         },
-        // printName,
         addScore,
         printScore,
         resetScore
@@ -208,5 +205,14 @@ const Logic = () => {
     return {};
 }
 
-// TODO Reset Score
+(() => {
+    document.querySelector(".reset-score").addEventListener("click", () => {
+        playerOne.resetScore();
+        playerTwo.resetScore();
+        scoreBoard.setScores();
+    })
+    document.querySelector(".reset-board").addEventListener("click", () => {
+        gameBoard.resetBoard();
+    })
 
+})();
