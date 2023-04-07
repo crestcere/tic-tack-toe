@@ -94,16 +94,21 @@ const gameBoard = (() => {
         body.innerHTML = "";
         let count = 0;
         let store = [];
+        let idCount = 0;
         for (let i = 0; i < board.length; i = i + 3) {
              store.push(
                 `
-                    <div style="display: flex; flex-direction: row">
-                        <div class="${count}" onclick="gameBoard.fill(${count});" style="border: 1px solid black; margin: 2px; height: 20px; width: 20px;">${board[i]}</div>
-                        <div class="${count+1}" onclick="gameBoard.fill(${count+1});" style="border: 1px solid black; margin: 2px; height: 20px; width: 20px;">${board[i+1]}</div>
-                        <div class="${count+2}" onclick="gameBoard.fill(${count+2});" style="border: 1px solid black; margin: 2px; height: 20px; width: 20px;">${board[i+2]}</div>
-                    </div>    
+                    <div class="flex flex-row">
+                        <div class="m-0.5 w-24 h-12 border-solid border-2 border-black text-4xl rounded-lg text-center"
+                             id="${"board-" + (idCount)}" onClick="gameBoard.fill(${count});">${board[i]}</div>
+                        <div class="m-0.5 w-24 h-12 border-solid border-2 border-black text-4xl rounded-lg text-center"
+                             id="${"board-" + (idCount+1)}" onClick="gameBoard.fill(${count + 1});">${board[i + 1]}</div>
+                        <div class="m-0.5 w-24 h-12 border-solid border-2 border-black text-4xl rounded-lg text-center"
+                             id="${"board-" + (idCount+2)}" onClick="gameBoard.fill(${count + 2});">${board[i + 2]}</div>
+                    </div>
                 `);
-             count += 3;
+            count += 3;
+             idCount += 3;
         }
         let a;
         a = store.join(" ");
@@ -116,7 +121,6 @@ const gameBoard = (() => {
         }
         printBoard()
     }
-
     printBoard();
     return {fill, printBoard, getBoard, resetFlow, resetBoard}
 })();
@@ -155,6 +159,8 @@ const Logic = () => {
     const board = gameBoard.getBoard();
     for (let i = 0; i < board.length; i++) {
         // Check "X" "X" "X"
+        //       "." "." "."
+        //       "." "." "."
         if (board[i] !==  "" && board[i] === board[i+1] && board[i+1] === board[i+2]) {
             gameBoard.resetFlow();
             if (board[i] === "X") {
@@ -165,9 +171,9 @@ const Logic = () => {
                 scoreBoard.setScores();
             }
         } else if (board[i] !==  "" && board[i] === board[i+3] && board[i+3] === board[i+6]) {
-            // "X"
-            // "X"
-            // "X"
+            // "X" "." "."
+            // "X" "." "."
+            // "X" "." "."
             gameBoard.resetFlow();
             if (board[i] === "X") {
                 playerOne.addScore();
@@ -177,9 +183,22 @@ const Logic = () => {
                 scoreBoard.setScores();
             }
         } else if (board[i] !==  "" && board[i] === board[i+4] && board[i+4] === board[i+8]) {
-            // "X"
-            //     "X"
-            //         "X"
+            // "X" "." "."
+            // "." "X" "."
+            // "." "." "X"
+            gameBoard.resetFlow();
+            if (board[i] === "X") {
+                playerOne.addScore();
+                scoreBoard.setScores();
+            } else {
+                playerTwo.addScore();
+                scoreBoard.setScores();
+            }
+        } else if (board[i] !==  "" && board[i] === board[i+2] && board[i+2] === board[i+4]) {
+                   } else if (board[i] !==  "" && board[i] === board[i+4] && board[i+4] === board[i+8]) {
+            // "." "." "X"
+            // "." "X" "."
+            // "X" "." "."
             gameBoard.resetFlow();
             if (board[i] === "X") {
                 playerOne.addScore();
