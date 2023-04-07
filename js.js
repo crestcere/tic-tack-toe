@@ -1,7 +1,3 @@
-// Score
-//
-// window.onbeforeunload = function () {return false;} // Disable auto refresh
-
 const saveInput = (() => {
     let _p1name = "Player 1";
     let _p2name = "Player 2";
@@ -49,6 +45,7 @@ const scoreBoard = (() => {
         setScores
     }
 })()
+
 // Make gameboard object
 // And make gameboard array inside of object
 // Flow game time object
@@ -67,8 +64,7 @@ const gameBoard = (() => {
     const checkBoard = (count) => {
         const checkAlready = () => {
             if (board[count] !== "") {
-                console.log("Already exists");
-                // TODO Add pop-up
+                alert("Already exists");
                 return false;
             } else {
                 return true;
@@ -78,8 +74,7 @@ const gameBoard = (() => {
     };
     const fill = (count = 0) => {
         if (flow > 8) {
-            console.log("Flow Ended!");
-            // TODO Add pop-up
+            alert("Flow Ended!");
             return false;
         } else {
             if (checkBoard(count)) {
@@ -115,7 +110,6 @@ const gameBoard = (() => {
         body.innerHTML = a;
     }
     const resetBoard = () => {
-        console.log("reset board clicked");
         flow = 0;
         for (let i = 0; i < board.length; i++) {
             board[i] = "";
@@ -126,8 +120,8 @@ const gameBoard = (() => {
     printBoard();
     return {fill, printBoard, getBoard, resetFlow, resetBoard}
 })();
-// Object for players
 
+// Object for players
 const createPlayer = (name) => {
     let _name = name;
     let score = 0;
@@ -166,11 +160,9 @@ const Logic = () => {
             if (board[i] === "X") {
                 playerOne.addScore();
                 scoreBoard.setScores();
-                console.log("Player 1 Wins on first loop", playerOne.printScore());
             } else {
                 playerTwo.addScore();
                 scoreBoard.setScores();
-                console.log("Player 2 Wins on first loop", playerTwo.printScore());
             }
         } else if (board[i] !==  "" && board[i] === board[i+3] && board[i+3] === board[i+6]) {
             // "X"
@@ -180,11 +172,9 @@ const Logic = () => {
             if (board[i] === "X") {
                 playerOne.addScore();
                 scoreBoard.setScores();
-                console.log("Player 1 Wins on second loop", playerOne.printScore());
             } else {
                 playerTwo.addScore();
                 scoreBoard.setScores();
-                console.log("Player 2 Wins on second loop", playerTwo.printScore());
             }
         } else if (board[i] !==  "" && board[i] === board[i+4] && board[i+4] === board[i+8]) {
             // "X"
@@ -194,11 +184,9 @@ const Logic = () => {
             if (board[i] === "X") {
                 playerOne.addScore();
                 scoreBoard.setScores();
-                console.log("Player 1 Wins on third loop", playerOne.printScore());
             } else {
                 playerTwo.addScore();
                 scoreBoard.setScores();
-                console.log("Player 2 Wins on third loop", playerTwo.printScore());
             }
         }
     }
@@ -214,5 +202,4 @@ const Logic = () => {
     document.querySelector(".reset-board").addEventListener("click", () => {
         gameBoard.resetBoard();
     })
-
 })();
